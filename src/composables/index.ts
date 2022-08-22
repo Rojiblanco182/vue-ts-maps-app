@@ -1,2 +1,2 @@
-export { usePlacesStore } from "./usePlacesStore";
+export { usePlacesStore } from "@/composables/usePlacesStore";
 
