@@ -21,6 +21,17 @@ export default defineComponent({
         zoom: 9, // starting zoom
         projection: {name: 'globe'} // display the map as a 3D globe
       });
+
+      const userLocationPopUp = new Mapboxgl.Popup()
+        .setLngLat(userLocation.value)
+        .setHTML(`
+        <h5>You're here</h5>
+        `);
+
+      const userLocationMarker = new Mapboxgl.Marker()
+        .setLngLat(userLocation.value)
+        .setPopup(userLocationPopUp)
+        .addTo(map);
     }
 
     onMounted(async () => {
