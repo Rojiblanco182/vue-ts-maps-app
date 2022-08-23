@@ -1,6 +1,8 @@
 import { ActionTree } from 'vuex';
 import { PlacesStateInterface } from './state';
 import { StateInterface } from '../index';
+import { mapboxApi } from '@/apis';
+import { Feature, PlacesResponse } from '@/interfaces/places';
 
 
 const actions: ActionTree<PlacesStateInterface, StateInterface> = {
@@ -12,6 +14,28 @@ const actions: ActionTree<PlacesStateInterface, StateInterface> = {
         throw new Error('geolocation not available');
       }
     )
+  },
+
+  async searchPlaceByTerm({ commit, state }, query: string): Promise<Feature[]> {
+    if (query.length === 0) {
+      commit('setPlaces', []);
+      return [];
+    }
+
+    if (!state.userLocation) {
+      throw new Error('user location missing');
+    }
+
+    commit('setIsLoadingPlaces');
+    
+    const response = await mapboxApi.get<PlacesResponse>(`/${query}.json`, {
+      params: {
+        proximity: state.userLocation?.join(','),
+      }
+    })
+
+    commit('setPlaces', response.data?.features);
+    return response.data?.features;
   }
 }
 

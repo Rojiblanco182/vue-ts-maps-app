@@ -14,6 +14,7 @@ export const usePlacesStore = () => {
   return {
     isLoading: computed(() => store.state.places.isLoading),
     userLocation: computed(() => store.state.places.userLocation),
-    isUserLocated: computed<boolean>(() => store.getters['places/isUserLocated'])
+    isUserLocated: computed<boolean>(() => store.getters['places/isUserLocated']),
+    searchPlaceByTerm: ( term = '' ) => store.dispatch('places/searchPlaceByTerm', term)
   }
 }
