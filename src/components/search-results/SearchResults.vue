@@ -1,17 +1,25 @@
 <script lang="ts" src="./SearchResults.ts" />
 
 <template>
-      <ul class="list-group mt-3">
-      <li class="list-group-item list-group-item-action">
-        <h5>Place</h5>
-        <p>Description</p>
-        <div align="right">
-          <button class="btn btn-outline-primary btn-sm">
-            Directions
-          </button>
-        </div>
-      </li>
-    </ul>
+  <div v-if="isLoadingPlaces" class="alert alert-primary text-center">
+    <h5>Loading...</h5>
+    <span>Please wait</span>
+  </div>
+
+  <ul v-else-if="places.length > 0" class="list-group mt-3">
+    <li v-for="place in places"
+      :key="place.id"
+      class="list-group-item list-group-item-action"
+    >
+      <h5>{{ place.text}}</h5>
+      <p>{{ place.place_name }}</p>
+      <div align="right">
+        <button class="btn btn-outline-primary btn-sm">
+         Directions
+        </button>
+      </div>
+    </li>
+  </ul>
 </template>
 
 <style scoped>
