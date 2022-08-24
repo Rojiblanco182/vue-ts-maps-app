@@ -9,6 +9,15 @@ const mutation: MutationTree<MapStateInterface> = {
     state.map = map;
   },
 
+  setDistanceAndDuration(state, {distance, duration}: {distance: number, duration: number}) {
+    let kms = distance / 1000;
+    kms = Math.round(kms * 100);
+    kms /= 100;
+    
+    state.distance = kms;
+    state.duration = Math.floor(duration / 60);
+  },
+
   setMarkers(state, places: Feature[]) {
     state.markers = resetMarkers(state);
 
