@@ -1,1 +1,2 @@
-export { default as mapboxApi } from './mapboxApi';
+export { default as searchApi } from './searchApi';
+export { default as directionsApi } from './directionsApi';

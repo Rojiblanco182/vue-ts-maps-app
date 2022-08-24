@@ -1,7 +1,7 @@
 import { ActionTree } from 'vuex';
 import { PlacesStateInterface } from './state';
 import { StateInterface } from '../index';
-import { mapboxApi } from '@/apis';
+import { searchApi } from '@/apis';
 import { Feature, PlacesResponse } from '@/interfaces/places';
 
 
@@ -28,7 +28,7 @@ const actions: ActionTree<PlacesStateInterface, StateInterface> = {
 
     commit('setIsLoadingPlaces');
     
-    const response = await mapboxApi.get<PlacesResponse>(`/${query}.json`, {
+    const response = await searchApi.get<PlacesResponse>(`/${query}.json`, {
       params: {
         proximity: state.userLocation?.join(','),
       }

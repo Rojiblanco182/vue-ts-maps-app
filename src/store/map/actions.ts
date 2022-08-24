@@ -1,11 +1,17 @@
 import { ActionTree } from 'vuex';
 import { MapStateInterface } from './state';
 import { StateInterface } from '../index';
+import { directionsApi } from '@/apis';
+import { DirectionsResponse } from '@/interfaces/directions';
 
+export type LngLat = [number, number];
 
 const actions: ActionTree<MapStateInterface, StateInterface> = {
-  someAction( /*{ commit }, payload  */) {
-    // a line to prevent linter errors
+  async getRouteBetweenPoints( { commit }, { start, end }: { start: LngLat, end:LngLat }) {
+    const query = `${start.join(',')};${end.join(',')}`;
+    const { data } = await directionsApi.get<DirectionsResponse>(query);
+    
+    commit('setRoutePolyline', data.routes[0].geometry.coordinates);
   }
 }
 
